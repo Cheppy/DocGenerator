@@ -1,0 +1,89 @@
+﻿@model DTSystem.Models.Contragent
+
+@{
+    ViewBag.Title = "Edit";
+}
+
+<h2>Edit</h2>
+
+
+@using (Html.BeginForm("Edit", "Contragents", FormMethod.Post, new { onsubmit = "return(assignProperties());"}))
+{
+    @Html.AntiForgeryToken()
+
+    <div class="form-horizontal">
+        <h4>Contragent</h4>
+        <hr />
+        @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+        @Html.HiddenFor(model => model.Id)
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.Name, htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.EditorFor(model => model.Name, new { htmlAttributes = new { @class = "form-control" } })
+                @Html.ValidationMessageFor(model => model.Name, "", new { @class = "text-danger" })
+            </div>
+        </div>
+       
+        @foreach (var item in ViewBag.propList)
+        {
+
+            <div class="form-group">
+                
+                <label class="control-label col-md-2" for="@(item.Name)">@(item.Name)</label>
+                <div class="col-md-10">
+                    <input class="form-control text-box single-line" id="@(item.Name)" name="@(item.Name)" type="text" value="@(ViewBag.propValues.ContainsKey(item.Name) ? ViewBag.propValues[item.Name] : "")" />
+
+                </div>
+            </div>
+
+
+
+        }
+
+        <script>                                           
+            var values;
+            function inputsToJson()
+            {
+                values = {};
+                $("input").each(function () {
+                    if (this.name != "__RequestVerificationToken" &&
+                       this.name != "Properties" &&
+                        this.name != "")
+                    {
+                        values[this.name] = this.value;
+                    }
+                })
+                return (JSON.stringify(values));
+            }
+            function assignProperties() {
+
+                $('#Properties').val(inputsToJson());
+                alert(inputsToJson());
+                alert($('#Properties').val());
+            }
+        </script>
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.Properties, htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.EditorFor(model => model.Properties, new { htmlAttributes = new { @class = "form-control" } })
+                @Html.ValidationMessageFor(model => model.Properties, "", new { @class = "text-danger" })
+            </div>
+        </div>
+
+        <div class="form-group">
+            <div class="col-md-offset-2 col-md-10">
+                <input type="submit" value="Save" class="btn btn-default" />
+            </div>
+        </div>
+    </div>
+}
+
+<div>
+    @Html.ActionLink("Back to List", "Index")
+</div>
+
+@section Scripts {
+    @Scripts.Render("~/bundles/jqueryval")
+}

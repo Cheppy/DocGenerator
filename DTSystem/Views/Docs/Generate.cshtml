@@ -1,0 +1,62 @@
+﻿@model IEnumerable<DTSystem.Models.Doc>
+ц   @{
+    ViewBag.Title = "Generate";
+
+}
+
+
+<div>
+    <select>
+    @foreach (dynamic item in ViewBag.contragentList)
+    {
+
+        <option value="@item">@item</option>
+    }
+
+</select>
+    <select>
+        @foreach (dynamic item in ViewBag.contragentList)
+        {
+
+            <option value="@item">@item</option>
+        
+        }
+
+    </select>
+    </div>
+
+</select>
+
+
+@*<div class="form-group">
+    @Html.LabelFor(model => , htmlAttributes: new { @class = "control-label col-md-2" })
+    <div class="col-md-10">
+        @Html.EditorFor(model => model.Properties, new { htmlAttributes = new { @class = "form-control" } })
+        @Html.ValidationMessageFor(model => model.Properties, "", new { @class = "text-danger" })
+    </div>
+</div>*@
+
+@*<div class="dropdown">
+    <button class="btn btn-default dropdown-toggle" type="button" id="dropdownMenu1" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">
+        C O N T R A G E N T
+        <span clas''s="caret"></span>
+    </button>
+    <ul class="dropdown-menu" aria-labelledby="dropdownMenu3">
+        @foreach (dynamic item in ViewBag.contragentList)
+        {
+
+            <li><a href="#">@item</a></li>
+        }
+    </ul>
+</div>*@
+
+<div class="form-group">
+    <div class="col-md-offset-2 col-md-10">
+        <input type="submit" value="Download" class="btn btn-default" />
+    </div>
+</div>
+<script>
+    $(".document").change(function () {
+        alert("Handler for .change() called.");
+    });
+</script>

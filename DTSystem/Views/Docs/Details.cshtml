@@ -1,0 +1,134 @@
+﻿@model DTSystem.Models.Doc
+2
+@{
+    ViewBag.Title = "Details";
+}
+
+<h1>____</h1>
+@using (Html.BeginForm("Details", "Docs", FormMethod.Post, new { onsubmit = " return(assignPlaceHolders())" }))
+{
+    @Html.AntiForgeryToken()
+
+    <div class="form-horizontal">
+        <div>
+       
+   </div>
+
+
+
+
+<div>
+    <h4>Doc</h4>
+    <hr />
+    <dl class="dl-horizontal">
+        <dt>
+            @Html.DisplayNameFor(model => model.Name)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Name)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.FilePath)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.FilePath)
+        </dd>
+
+    </dl>
+</div>
+
+ 
+
+        @*<div class="form-group">
+            @Html.LabelFor(model => model.PlaceHolders, htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.EditorFor(model => model.PlaceHolders, new { htmlAttributes = new { @class = "form-control" } })
+                @Html.ValidationMessageFor(model => model.PlaceHolders, "", new { @class = "text-danger" })
+            </div>
+        </div>*@
+
+
+
+<div>
+    @foreach (var item in ViewBag.placeholders)
+    {
+
+    <div class="form-group">
+        <label class="control-label col-md-2" for="@(item)">@(item)</label>
+        <div class="col-md-10">
+            <input class="form-control text-box single-line" id="@(item)" name="@(item)" type="text" value="" />
+
+        </div>
+       
+
+    </div>
+    }
+        
+    @foreach (dynamic item in ViewBag.contragentsHolder)
+    {
+
+        <div class="form-group">
+            <label class="control-label col-md-2" for="@(item)">@(item)</label>
+            <div class="col-md-10">
+                @*<input class="form-control text-box single-line" id="@(item)" name="@(item)" type="text" value="" />*@
+                <select id="@(item)" name="@(item)">
+                    @foreach (var item1 in ViewBag.contragents)
+                    {
+
+                        <option value="@(item1.Value)">@(item1.Text)</option>
+                    }
+
+                </select>
+            </div>
+        </div>
+    }
+
+
+
+
+</div>
+</div>
+<div class="form-group">
+    <div class="col-md-offset-2 col-md-10">
+        <input type="submit" value="Create" class="btn btn-default" />
+    </div>
+</div>
+<p>
+    @Html.ActionLink("Edit", "Edit", new { id = Model.Id }) |
+    @Html.ActionLink("Back to List", "Index")
+</p>
+<script>
+    var values;
+    var selects;
+            function inputsToJson()
+            {
+                values = {};
+                selects = {};
+                $("input").each(function () {
+                    if (this.name != "__RequestVerificationToken" &&
+                        this.name != "PlaceHolders" &&
+                        this.name != "") {
+                        values[this.name] = this.value;
+                    }
+                });
+                $("select").each(function () {
+                    if (//this.name != "__RequestVerificationToken" &&
+                        //this.name != "PlaceHolder" &&
+                        this.name != "") {
+                        selects[this.name] = this.value;
+                    }
+                });
+
+                concatJson = { plainFields: values, complexFields: selects };//concated jsons
+                return (JSON.stringify(concatJson));
+            }
+            function assignPlaceHolders() {   //podstavit
+                
+                $('#PlaceHolders').val(inputsToJson());
+                alert($('#PlaceHolders').val());
+            }
+</script>
+}   
